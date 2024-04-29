@@ -8,3 +8,4 @@ polytocircles.py converts a given polygon to a collection of circles that do not
 ![5 circles](./5circ003.png)
 ![10 circles](./10circ003.png)
 ![20 circles](./20circ003.png)
+polytocirclesspiral.py is an algorithm in progress to iterate from center points to optimize time. spiral.py illustrates the concept of spiral access to an np array.

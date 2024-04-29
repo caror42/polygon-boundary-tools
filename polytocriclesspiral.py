@@ -66,6 +66,11 @@ def addCircles(num, polyg, grain = 5):
       X = len(covered)
       Y = len(covered[0])
 
+      #vars for spiral array access
+      x = y = 0
+      dx = 0
+      dy = -1
+
       #define working optimal radius and its center for future comparison and eventual plot
       top_radius = 0
       top_center = [-1, -1]
@@ -75,10 +80,11 @@ def addCircles(num, polyg, grain = 5):
 
       #k,l represent a new center for the circle
       #each point in the descritized array can serve as a center
-      #future optimization: start scanning at the center and spiral outwards
-      for k in range(1, X):
-         for l in range(1, Y):
-            
+      #scan starts at the center and spirals outwards
+      for _ in range(max(X, Y)**2):
+         if (-X/2 < x <= X/2) and (-Y/2 < y <= Y/2):
+            k = int(x-1+X/2)
+            l = int(y-1+Y/2)
             #if the point is outside the polygon, go next
             if covered[k][l] == -1:
                continue
@@ -136,6 +142,9 @@ def addCircles(num, polyg, grain = 5):
                   top_radius = curr_rad
                   top_center = new_center
                   max_points = curr_covered
+         if x == y or (x < 0 and x == -y) or (x > 0 and x == 1-y):
+            dx, dy = -dy, dx
+         x, y = x+dx, y+dy
       
       #update what points are covered
       for m in range(top_center[0]-top_radius - 1, top_center[0]+top_radius + 1):
@@ -167,8 +176,8 @@ def addCircles(num, polyg, grain = 5):
       # print(cov_county)
       # print(out_range)
 
-      # print("ROUND TWO")
-      # print(count)
+      print("ROUND TWO")
+      print(count)
 
 #GeoJSON
 js = '''{
@@ -1241,7 +1250,7 @@ addCircles(5, coor[0], .003)
 #record end time
 end = time.time()
 
-# total time taken, uncomment to print time
-# print("Execution time of the program is- ", end-start)
+#total time taken, uncomment to print time
+print("Execution time of the program is- ", end-start)
 
 plt.show()
